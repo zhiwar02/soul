@@ -1,0 +1,276 @@
+<?php
+session_start();
+
+$login_success = false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+    if ($username === 'shaida' && $password === 'نەمپەرژێ') {
+        $_SESSION['logged_in'] = true;
+        $login_success = true;
+    } else {
+        $error = "Invalid credentials!";
+    }
+}
+
+if (!isset($_SESSION['logged_in'])) {
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        color: white;
+        text-align: center;
+        background: black;
+    }
+
+    #background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .content {
+        position: relative;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 30px;
+        border-radius: 15px;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin: 0;
+    }
+
+    .login-box {
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    input {
+        display: block;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+    <img id="background-video" src="bg.jpg">
+
+    <div class="login-box">
+        <h2>Login</h2>
+        <?php if (isset($error)) echo "<p style='color: red;'>$error</p>"; ?>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+
+</html>
+<?php
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Angel</title>
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Poppins', sans-serif;
+        color: white;
+        text-align: center;
+        background: black;
+    }
+
+    #background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 150vh;
+        object-fit: cover;
+        z-index: -2;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .content {
+        position: relative;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 30px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+    }
+
+    h3 {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .last {
+        display: hidden !important;
+    }
+    </style>
+</head>
+
+<body>
+    <img id="background-video" src="bg.jpg">
+    <canvas id="particles"></canvas>
+    <audio src="./last.mp3" class="last" id="audio"></audio>
+    <div class="content">
+        <h3>هیچی مەپەڕێتە ئەمە بۆ هەردووکمانە😅</h3>
+        <audio src="./zhiwar.ogg" controls></audio>
+        <audio src="./zhiwar2.ogg" controls></audio>
+        <audio src="./zhiwar1.ogg" controls></audio>
+        <h2>🪐گەردوونی من</h2>
+        <p style="text-wrap: wrap;">some angels don't have any wings, i mean just look at you❤️</p>
+        <div style="display:flex; justify-content:center;">
+            <img src="./shaida1.jpg" width="210" alt="">
+            <img src="./shaida2.jpg" width="210" alt="">
+        </div>
+        <div style="display:flex; justify-content:center;">
+            <div style="display: flex; flex-direction: column;">
+                <h3> هەموو ئاواتی ژیانم زۆر سادەیە🥹
+                </h3>
+                <video width="210" src="./goal.mp4" controls></video>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <h3> رێک😅
+                </h3>
+                <video width="210" src="./shaida.mp4" controls></video>
+            </div>
+        </div>
+        <form action="https://formspree.io/f/xwplbqae" method="post">
+            <input type="text" class="input" name="message" placeholder="ئەبیتە گەردوونی من؟😅" id="">
+            <button type="submit">ناردن</button>
+        </form>
+    </div>
+    <script>
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+    document.querySelector(".input").addEventListener("focus", () => {
+        const audio = document.getElementById("audio");
+        audio.play();
+    });
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.size = Math.random() * 5 + 2;
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.speedY = (Math.random() - 0.5) * 1.5;
+            this.opacity = Math.random() * 0.5 + 0.5;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.size > 0.2) {
+                this.size -= 0.01;
+            } else {
+                this.reset();
+            }
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+            ctx.beginPath();
+            for (let i = 0; i < 5; i++) {
+                let angle = (Math.PI * 2 / 5) * i - Math.PI / 2;
+                let x = Math.cos(angle) * this.size;
+                let y = Math.sin(angle) * this.size;
+                ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    function initParticles() {
+        particlesArray = [];
+        for (let i = 0; i < 50; i++) {
+            particlesArray.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+    window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initParticles();
+    });
+    initParticles();
+    animateParticles();
+    </script>
+</body>
+
+</html>
