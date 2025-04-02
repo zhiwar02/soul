@@ -79,7 +79,6 @@
         <h2>Login</h2>
         <form id="login-form">
             <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
             <button type="submit">Login</button>
             <p id="error-message" class="error"></p>
         </form>
@@ -90,10 +89,9 @@
             event.preventDefault();
             
             const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('error-message');
             
-            if (username === 'shaida' && password === 'نەمپەرژێ') {
+            if (username === 'shaida') {
                 window.location = "./index2.html"
             } else {
                 errorMessage.textContent = 'هەڵەیە!';
